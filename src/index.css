@@ -1,6 +1,18 @@
+.fact{
+  width: 80%;
+  margin: auto;
+}
+
 .text-body{
   width: 80%;
   margin: auto;
+}
+
+.substring1{
+}
+
+.substring2{
+  color: gray;
 }
 
 .typing-input{
