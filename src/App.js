@@ -25,20 +25,44 @@ function App() {
 
   const handleChange = (event) =>{
     setTypeInput(event.target.value)
-    setSubstring1(fact.slice(0, event.target.value.length))
+    //setSubstring1(fact.slice(0, event.target.value.length))
+    setSubstring1(event.target.value)
     setSubstring2(fact.slice(event.target.value.length, fact.length))
   }
-  console.log(substring1)
-  console.log(substring2)
+
+  //console.log(fact[substring1.length-1])
+
+  const getLettersWithLoop = () =>{
+    const itemsArr = [];
+    for(let i = 0; i < substring1.length; i++){  
+      console.log(fact[i], substring1[i])    
+      if(substring1[i] !== fact[i]){
+        console.log('test')        
+      }else{
+        if(itemsArr.length === 0){
+          itemsArr.push(substring1[i])
+        }else{
+          itemsArr.splice(itemsArr.length-1, 1, itemsArr[itemsArr.length-1]+substring1[i])
+        }
+      }
+    }
+    console.log(itemsArr)
+    {/*return(
+      itemsArr
+    )*/}
+  }
+  getLettersWithLoop()
 
   return (
     <div className="App">
       <button onClick={handleClick}>Fetch</button>
       <div>
-        {/*<p className='fact'>{fact}</p>*/}
+        <p className='fact'>FACT: {fact}</p>
         <div className='text-body'>
-          <span className='substring1'>{substring1}</span>
-          <span className='substring2'>{substring2}</span>
+          <p>
+            {/*<span className='substring1'>{substring1}</span>*/}
+            <span className='substring2'>{substring2}</span>
+          </p>
         </div>
         <input className='typing-input' onChange={handleChange}></input>
       </div>
