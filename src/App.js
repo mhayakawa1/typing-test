@@ -10,6 +10,7 @@ function App() {
   const [typeInput, setTypeInput] = useState('');
   const [substring1, setSubstring1] = useState('');
   const [substring2, setSubstring2] = useState('');
+  const [mistakeCount, setMistakeCount] = useState(0);
 
   function handleClick() {
     const request = new XMLHttpRequest();
@@ -25,42 +26,36 @@ function App() {
 
   const handleChange = (event) =>{
     setTypeInput(event.target.value)
-    //setSubstring1(fact.slice(0, event.target.value.length))
     setSubstring1(event.target.value)
     setSubstring2(fact.slice(event.target.value.length, fact.length))
+   
+    if(event.target.value[event.target.value.length-1] !== fact[event.target.value.length-1]){
+      setMistakeCount(mistakeCount+1)
+    }
   }
-
-  //console.log(fact[substring1.length-1])
 
   const getLettersWithLoop = () =>{
-    const itemsArr = [];
-    for(let i = 0; i < substring1.length; i++){  
-      console.log(fact[i], substring1[i])    
-      if(substring1[i] !== fact[i]){
-        console.log('test')        
-      }else{
-        if(itemsArr.length === 0){
-          itemsArr.push(substring1[i])
-        }else{
-          itemsArr.splice(itemsArr.length-1, 1, itemsArr[itemsArr.length-1]+substring1[i])
-        }
+    let itemsArr = [];
+    for(let i = 0; i < substring1.length; i++){
+      if(substring1[i] !== fact[i]){//if character doesn't match
+        itemsArr.push(<span key={i} className='mistake'>{substring1[i]}</span>)
+      }else{//if character matches
+        itemsArr.push(<span key={i}>{substring1[i]}</span>)
       }
     }
-    console.log(itemsArr)
-    {/*return(
+    return(
       itemsArr
-    )*/}
+    )
   }
-  getLettersWithLoop()
+  
 
   return (
     <div className="App">
       <button onClick={handleClick}>Fetch</button>
       <div>
-        <p className='fact'>FACT: {fact}</p>
         <div className='text-body'>
           <p>
-            {/*<span className='substring1'>{substring1}</span>*/}
+            {getLettersWithLoop()}
             <span className='substring2'>{substring2}</span>
           </p>
         </div>
