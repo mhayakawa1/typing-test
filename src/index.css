@@ -8,6 +8,11 @@
   margin: auto;
 }
 
+.mistake{
+  color: red;
+  text-decoration: underline;
+}
+
 .substring1{
 }
 
