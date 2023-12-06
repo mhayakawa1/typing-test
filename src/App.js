@@ -11,8 +11,9 @@ function App() {
   const [substring1, setSubstring1] = useState('');
   const [substring2, setSubstring2] = useState('');
   const [mistakeCount, setMistakeCount] = useState(0);
-  
+
   //https://github.com/c-w/gutenberg-http/
+  //change api to a book instead of random fact
 
   function handleClick() {
     const request = new XMLHttpRequest();
