@@ -1,3 +1,16 @@
+.timer-container{
+  width: 5rem;
+}
+
+.timer{
+  border: 1px solid black;
+  height: 2rem;
+  width: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .fact{
   width: 80%;
   margin: auto;
