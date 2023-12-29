@@ -1,11 +1,13 @@
 import './App.css';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 {/*
 https://uselessfacts.jsph.pl/
 */}
 
 function App() {
+  const [paused, setPaused] = useState(true);
+  const [seconds, setSeconds] = useState(0);
   const [fact, setfact] = useState(null);
   const [typeInput, setTypeInput] = useState('');
   const [substring1, setSubstring1] = useState('');
@@ -41,7 +43,7 @@ function App() {
     let itemsArr = [];
     for(let i = 0; i < substring1.length; i++){
       if(substring1[i] !== fact[i]){//if character doesn't match
-        itemsArr.push(<span key={i} className='mistake'>{substring1[i]}</span>)
+        itemsArr.push(<span key={i} className='mistake'>{fact[i]}</span>)
       }else{//if character matches
         itemsArr.push(<span key={i}>{substring1[i]}</span>)
       }
@@ -51,9 +53,25 @@ function App() {
     )
   }
   
+  useEffect(() => {
+    
+  })
 
   return (
     <div className="App">
+      <div className='timer-container'>
+        <div className='timer'>
+          <p>
+            <span></span>
+            :
+            <span></span>
+          </p>
+        </div>
+        <div className='timer-buttons'>
+          <button>🔄</button>
+          <button onClick={() => setPaused(!paused)}>⏯</button>
+        </div>
+      </div>
       <button onClick={handleClick}>Fetch</button>
       <div>
         <div className='text-body'>
