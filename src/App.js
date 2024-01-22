@@ -8,6 +8,7 @@ https://uselessfacts.jsph.pl/
 function App() {
   const [paused, setPaused] = useState(true);
   const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(3);
   const [fact, setfact] = useState(null);
   const [typeInput, setTypeInput] = useState('');
   const [substring1, setSubstring1] = useState('');
@@ -15,7 +16,7 @@ function App() {
   const [mistakeCount, setMistakeCount] = useState(0);
 
   //https://github.com/c-w/gutenberg-http/
-  //change api to a book instead of random fact
+  //change api to longer text instead of random fact
 
   function handleClick() {
     const request = new XMLHttpRequest();
@@ -54,19 +55,32 @@ function App() {
   }
   
   useEffect(() => {
-    
-  })
+    let interval
+    if(!paused){//if paused is false, update seconds
+      interval = setInterval(() =>{
+        if(minutes === 0 && seconds === 0){
+          setPaused(false)
+        }
+        //if seconds is 0, subtract 1 from minutes and reset seconds to 59
+        //else set minutes to minutes and subtract 1 from seconds
+        setMinutes((minutes) => seconds === 0 ? minutes - 1 : minutes);        
+        setSeconds((seconds) => seconds === 0 ? 59 : seconds - 1);
+      }, 1000)
+    }
+    return function clear(){//clears interval if paused is true
+      clearInterval(interval)
+    }
+  }, [paused])
 
   return (
     <div className="App">
       <div className='timer-container'>
         <div className='timer'>
           <p>
-            <span></span>
-            :
-            <span></span>
+            {minutes}:{seconds < 10 ? 0 : null}{seconds}{/*if seconds is less than 10, add a 0*/}
           </p>
         </div>
+        
         <div className='timer-buttons'>
           <button>🔄</button>
           <button onClick={() => setPaused(!paused)}>⏯</button>
@@ -80,7 +94,7 @@ function App() {
             <span className='substring2'>{substring2}</span>
           </p>
         </div>
-        <input className='typing-input' onChange={handleChange}></input>
+        <input className='typing-input' readOnly={paused === true ? true : false} onChange={handleChange}></input>
       </div>
     </div>
   );
