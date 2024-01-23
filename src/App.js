@@ -9,21 +9,22 @@ function App() {
   const [paused, setPaused] = useState(true);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(3);
-  const [fact, setfact] = useState(null);
-  const [typeInput, setTypeInput] = useState('');
+  const [fact, setFact] = useState(null);
+  //const [typeInput, setTypeInput] = useState('');
   const [substring1, setSubstring1] = useState('');
   const [substring2, setSubstring2] = useState('');
   const [mistakeCount, setMistakeCount] = useState(0);
 
   //https://github.com/c-w/gutenberg-http/
-  //change api to longer text instead of random fact
 
   function handleClick() {
     const request = new XMLHttpRequest();
+    //get random text from API
+    //change api to longer text instead of random fact
     request.open('GET', 'https://uselessfacts.jsph.pl/api/v2/facts/random');
     request.onload = function() {
       if (request.status === 200) {
-        setfact(JSON.parse(request.responseText).text);
+        setFact(JSON.parse(request.responseText).text);
         setSubstring2(JSON.parse(request.responseText).text);
       }
     };
@@ -31,7 +32,7 @@ function App() {
   }
 
   const handleChange = (event) =>{
-    setTypeInput(event.target.value)
+    //setTypeInput(event.target.value)
     setSubstring1(event.target.value)
     setSubstring2(fact.slice(event.target.value.length, fact.length))
    
@@ -40,12 +41,12 @@ function App() {
     }
   }
 
-  const getLettersWithLoop = () =>{
+  const getLettersWithLoop = () => {
     let itemsArr = [];
     for(let i = 0; i < substring1.length; i++){
-      if(substring1[i] !== fact[i]){//if character doesn't match
+      if(substring1[i] !== fact[i]){//if character doesn't match, give it mistake className
         itemsArr.push(<span key={i} className='mistake'>{fact[i]}</span>)
-      }else{//if character matches
+      }else{//if character matches, it is not marked as a mistake
         itemsArr.push(<span key={i}>{substring1[i]}</span>)
       }
     }
@@ -53,24 +54,51 @@ function App() {
       itemsArr
     )
   }
-  
+
+  const results = () => {
+    console.log(substring1.length)
+    //console.log(substring2)
+    {/*
+Total Number of Words = Total Keys Pressed / 5
+WPM = Total Number of Words / Time Elapsed in Minutes (rounded down)
+
+Example:
+Total Keys Pressed = 200
+Time Elapsed in Minutes = 1.5
+WPM = ( (200 / 5) / 1.5 ) = 26
+
+  */}
+    const charCount = substring1.length //total keys pressed
+
+  }
+
   useEffect(() => {
     let interval
     if(!paused){//if paused is false, update seconds
       interval = setInterval(() =>{
-        if(minutes === 0 && seconds === 0){
-          setPaused(false)
-        }
-        //if seconds is 0, subtract 1 from minutes and reset seconds to 59
-        //else set minutes to minutes and subtract 1 from seconds
-        setMinutes((minutes) => seconds === 0 ? minutes - 1 : minutes);        
-        setSeconds((seconds) => seconds === 0 ? 59 : seconds - 1);
+        setMinutes((minutes) => seconds === 0 && minutes > 0 ? minutes - 1 : minutes)
+        setSeconds((seconds) => seconds > 0 ? seconds - 1 : 59)
       }, 1000)
+    }
+    if(minutes+seconds === 0){
+      setPaused(true)
+      results()
     }
     return function clear(){//clears interval if paused is true
       clearInterval(interval)
     }
-  }, [paused])
+    
+  }, [paused, seconds, minutes])
+
+  const reset = () =>{
+    setPaused(true)
+    setSeconds(0)
+    setMinutes(3)
+    setFact(null)
+    setSubstring1('')
+    setSubstring2('')
+    setMistakeCount(0)
+  }
 
   return (
     <div className="App">
@@ -82,7 +110,7 @@ function App() {
         </div>
         
         <div className='timer-buttons'>
-          <button>🔄</button>
+          <button onClick={() => reset()}>🔄</button>
           <button onClick={() => setPaused(!paused)}>⏯</button>
         </div>
       </div>
@@ -95,6 +123,8 @@ function App() {
           </p>
         </div>
         <input className='typing-input' readOnly={paused === true ? true : false} onChange={handleChange}></input>
+        <p>Mistakes: {mistakeCount}</p>
+        <button onClick={() => results()}>Results</button>
       </div>
     </div>
   );
