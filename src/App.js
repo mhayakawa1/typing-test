@@ -9,34 +9,37 @@ function App() {
   const [paused, setPaused] = useState(true);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(3);
-  const [fact, setFact] = useState(null);
+  const [word, setWord] = useState(null);
   //const [typeInput, setTypeInput] = useState('');
   const [substring1, setSubstring1] = useState('');
   const [substring2, setSubstring2] = useState('');
   const [mistakeCount, setMistakeCount] = useState(0);
+  const [wpm, setWpm] = useState(0);
 
-  //https://github.com/c-w/gutenberg-http/
-
-  function handleClick() {
+  const fetchRandomWord = () =>{
     const request = new XMLHttpRequest();
-    //get random text from API
-    //change api to longer text instead of random fact
-    request.open('GET', 'https://uselessfacts.jsph.pl/api/v2/facts/random');
-    request.onload = function() {
-      if (request.status === 200) {
-        setFact(JSON.parse(request.responseText).text);
-        setSubstring2(JSON.parse(request.responseText).text);
-      }
-    };
-    request.send();
+    //get random word from API
+    //change api to longer text instead of random word
+    fetch('https://api.api-ninjas.com/v1/randomword', {
+      headers: {'X-Api-Key': '67D5uoVOX9DPypSVxzWv5g==YQCawIMncvqtHQJU'}
+    })
+    .then(res => res.json())
+    .then(result => {
+      setWord(result)
+    })
+    .catch(err=>console.log(err))
   }
 
+  const handleClick = () => {
+    fetchRandomWord()
+  }
+console.log(word)
   const handleChange = (event) =>{
     //setTypeInput(event.target.value)
     setSubstring1(event.target.value)
-    setSubstring2(fact.slice(event.target.value.length, fact.length))
+    setSubstring2(word.slice(event.target.value.length, word.length))
    
-    if(event.target.value[event.target.value.length-1] !== fact[event.target.value.length-1]){
+    if(event.target.value[event.target.value.length-1] !== word[event.target.value.length-1]){
       setMistakeCount(mistakeCount+1)
     }
   }
@@ -44,8 +47,8 @@ function App() {
   const getLettersWithLoop = () => {
     let itemsArr = [];
     for(let i = 0; i < substring1.length; i++){
-      if(substring1[i] !== fact[i]){//if character doesn't match, give it mistake className
-        itemsArr.push(<span key={i} className='mistake'>{fact[i]}</span>)
+      if(substring1[i] !== word[i]){//if character doesn't match, give it mistake className
+        itemsArr.push(<span key={i} className='mistake'>{word[i]}</span>)
       }else{//if character matches, it is not marked as a mistake
         itemsArr.push(<span key={i}>{substring1[i]}</span>)
       }
@@ -56,20 +59,10 @@ function App() {
   }
 
   const results = () => {
-    console.log(substring1.length)
-    //console.log(substring2)
-    {/*
-Total Number of Words = Total Keys Pressed / 5
-WPM = Total Number of Words / Time Elapsed in Minutes (rounded down)
-
-Example:
-Total Keys Pressed = 200
-Time Elapsed in Minutes = 1.5
-WPM = ( (200 / 5) / 1.5 ) = 26
-
-  */}
-    const charCount = substring1.length //total keys pressed
-
+    {/* Total Number of Words = Total Keys Pressed / 5
+        wpm = Total Number of Words / Time Elapsed  */}
+    setWpm((substring1.length/5)/3)
+    console.log(wpm)
   }
 
   useEffect(() => {
@@ -94,7 +87,7 @@ WPM = ( (200 / 5) / 1.5 ) = 26
     setPaused(true)
     setSeconds(0)
     setMinutes(3)
-    setFact(null)
+    setWord(null)
     setSubstring1('')
     setSubstring2('')
     setMistakeCount(0)
@@ -125,6 +118,7 @@ WPM = ( (200 / 5) / 1.5 ) = 26
         <input className='typing-input' readOnly={paused === true ? true : false} onChange={handleChange}></input>
         <p>Mistakes: {mistakeCount}</p>
         <button onClick={() => results()}>Results</button>
+        {minutes+seconds === 0 ? wpm : null}
       </div>
     </div>
   );
