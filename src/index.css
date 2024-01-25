@@ -37,3 +37,9 @@
   width: 80%;
   height: 1rem;
 }
+
+.text-body{
+  border: 1px solid red;
+  width: 20rem;
+  height: 5rem;
+}

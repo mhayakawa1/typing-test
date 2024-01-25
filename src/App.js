@@ -9,37 +9,33 @@ function App() {
   const [paused, setPaused] = useState(true);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(3);
-  const [word, setWord] = useState(null);
+  const [words, setWords] = useState(null);
   //const [typeInput, setTypeInput] = useState('');
+  const [text, setText] = useState('');
   const [substring1, setSubstring1] = useState('');
   const [substring2, setSubstring2] = useState('');
   const [mistakeCount, setMistakeCount] = useState(0);
   const [wpm, setWpm] = useState(0);
+ 
 
   const fetchRandomWord = () =>{
-    const request = new XMLHttpRequest();
-    //get random word from API
-    //change api to longer text instead of random word
-    fetch('https://api.api-ninjas.com/v1/randomword', {
-      headers: {'X-Api-Key': '67D5uoVOX9DPypSVxzWv5g==YQCawIMncvqtHQJU'}
-    })
-    .then(res => res.json())
-    .then(result => {
-      setWord(result)
-    })
-    .catch(err=>console.log(err))
-  }
+    //get words from API
+    fetch('https://gist.githubusercontent.com/deekayen/4148741/raw/98d35708fa344717d8eee15d11987de6c8e26d7d/1-1000.txt')    
+      .then(res => res.text())
+      .then(result => {
+        setWords(result.split('\n').sort(() => Math.random() - 0.5).join(' '))      
+      })
+  } 
 
   const handleClick = () => {
     fetchRandomWord()
   }
-console.log(word)
+//console.log(word)
   const handleChange = (event) =>{
-    //setTypeInput(event.target.value)
     setSubstring1(event.target.value)
-    setSubstring2(word.slice(event.target.value.length, word.length))
-   
-    if(event.target.value[event.target.value.length-1] !== word[event.target.value.length-1]){
+    setSubstring2(words.slice(event.target.value.length, words.length))
+
+    if(event.target.value[event.target.value.length-1] !== words[event.target.value.length-1]){
       setMistakeCount(mistakeCount+1)
     }
   }
@@ -47,8 +43,8 @@ console.log(word)
   const getLettersWithLoop = () => {
     let itemsArr = [];
     for(let i = 0; i < substring1.length; i++){
-      if(substring1[i] !== word[i]){//if character doesn't match, give it mistake className
-        itemsArr.push(<span key={i} className='mistake'>{word[i]}</span>)
+      if(substring1[i] !== words[i]){//if character doesn't match, give it mistake className
+        itemsArr.push(<span key={i} className='mistake'>{words[i]}</span>)
       }else{//if character matches, it is not marked as a mistake
         itemsArr.push(<span key={i}>{substring1[i]}</span>)
       }
@@ -60,7 +56,7 @@ console.log(word)
 
   const results = () => {
     {/* Total Number of Words = Total Keys Pressed / 5
-        wpm = Total Number of Words / Time Elapsed  */}
+      wpm = Total Number of Words / Time Elapsed  */}
     setWpm((substring1.length/5)/3)
     console.log(wpm)
   }
@@ -87,7 +83,7 @@ console.log(word)
     setPaused(true)
     setSeconds(0)
     setMinutes(3)
-    setWord(null)
+    setWords(null)
     setSubstring1('')
     setSubstring2('')
     setMistakeCount(0)
