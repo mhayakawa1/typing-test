@@ -26,20 +26,52 @@
   text-decoration: underline;
 }
 
+.text-body{
+  width: 50rem;
+  height: auto;
+  overflow: clip;
+  display: flex;
+}
+
+.text-body p{
+  height: 4rem;
+  font-size: 3rem;
+  padding: 0;
+  margin: 0;
+  border: 1px solid red;
+  width: 100%;
+  display: flex;
+}
+
 .substring1{
+  color: blue;
+  width: 50%;
+  text-align: right;
+  border: 1px solid green;
 }
 
 .substring2{
   color: gray;
+  width: 50%;
+  padding: 0;
+  border: 1px solid blue;
+  text-align: left;
+}
+
+.space{
+  padding: 0 0 0 .25em;
 }
 
 .typing-input{
-  width: 80%;
-  height: 1rem;
-}
-
-.text-body{
-  border: 1px solid red;
-  width: 20rem;
-  height: 5rem;
+  position: absolute;
+  z-index: 2;
+  width: 25rem;
+  height: 4rem;
+  font-size: 3rem;
+  text-align: right;
+  margin: 0;
+  font-family: 'Times New Roman', Times, serif;
+  opacity: 0%;
+  color: purple;
+  border: none;
 }
