@@ -30,11 +30,11 @@ function App() {
   const handleClick = () => {
     fetchRandomWord()
   }
-//console.log(word)
+//console.log(words)
   const handleChange = (event) =>{
     setSubstring1(event.target.value)
     setSubstring2(words.slice(event.target.value.length, words.length))
-
+    
     if(event.target.value[event.target.value.length-1] !== words[event.target.value.length-1]){
       setMistakeCount(mistakeCount+1)
     }
@@ -42,12 +42,15 @@ function App() {
 
   const getLettersWithLoop = () => {
     let itemsArr = [];
+    //console.log(substring1.length)
     for(let i = 0; i < substring1.length; i++){
+      //console.log(words[i])
       if(substring1[i] !== words[i]){//if character doesn't match, give it mistake className
         itemsArr.push(<span key={i} className='mistake'>{words[i]}</span>)
       }else{//if character matches, it is not marked as a mistake
-        itemsArr.push(<span key={i}>{substring1[i]}</span>)
+        itemsArr.push(<span key={i}>{substring1[i] === ' ' ? '\u00A0' : substring1[i]}</span>)
       }
+      //console.log(itemsArr)
     }
     return(
       itemsArr
@@ -58,7 +61,7 @@ function App() {
     {/* Total Number of Words = Total Keys Pressed / 5
       wpm = Total Number of Words / Time Elapsed  */}
     setWpm((substring1.length/5)/3)
-    console.log(wpm)
+    //console.log(wpm)
   }
 
   useEffect(() => {
@@ -107,11 +110,12 @@ function App() {
       <div>
         <div className='text-body'>
           <p>
-            {getLettersWithLoop()}
-            <span className='substring2'>{substring2}</span>
+            <span className='substring1'>{getLettersWithLoop()}</span>
+            <span className={`substring2 ${substring2[0] === ' ' ? 'space' : null}`}>{substring1.length === 0 ? words : substring2}</span>
           </p>
+          <input className='typing-input' //readOnly={paused === true ? true : false}
+            onChange={handleChange}></input>
         </div>
-        <input className='typing-input' readOnly={paused === true ? true : false} onChange={handleChange}></input>
         <p>Mistakes: {mistakeCount}</p>
         <button onClick={() => results()}>Results</button>
         {minutes+seconds === 0 ? wpm : null}
