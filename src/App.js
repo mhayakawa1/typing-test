@@ -8,7 +8,7 @@ https://uselessfacts.jsph.pl/
 function App() {
   const [paused, setPaused] = useState(true);
   const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(3);
+  const [minutes, setMinutes] = useState(1);
   const [words, setWords] = useState(null);
   //const [typeInput, setTypeInput] = useState('');
   const [text, setText] = useState('');
@@ -16,9 +16,9 @@ function App() {
   const [substring2, setSubstring2] = useState('');
   const [mistakeCount, setMistakeCount] = useState(0);
   const [wpm, setWpm] = useState(0);
- 
+  const [accuracy, setAccuracy] = useState('');
 
-  const fetchRandomWord = () =>{
+  const fetchRandomWords = () =>{
     //get words from API
     fetch('https://gist.githubusercontent.com/deekayen/4148741/raw/98d35708fa344717d8eee15d11987de6c8e26d7d/1-1000.txt')    
       .then(res => res.text())
@@ -28,10 +28,17 @@ function App() {
   } 
 
   const handleClick = () => {
-    fetchRandomWord()
+    fetchRandomWords()
   }
-//console.log(words)
+
   const handleChange = (event) =>{
+    if(paused === true){
+      setPaused(false)
+      if(event.target.value !== ''){
+        event.target.value = event.target.value[event.target.value.length-1]
+      }
+    }
+    
     setSubstring1(event.target.value)
     setSubstring2(words.slice(event.target.value.length, words.length))
     
@@ -42,15 +49,12 @@ function App() {
 
   const getLettersWithLoop = () => {
     let itemsArr = [];
-    //console.log(substring1.length)
     for(let i = 0; i < substring1.length; i++){
-      //console.log(words[i])
       if(substring1[i] !== words[i]){//if character doesn't match, give it mistake className
-        itemsArr.push(<span key={i} className='mistake'>{words[i]}</span>)
+        itemsArr.push(<span key={i} className='mistake'>{substring1[i]}</span>)
       }else{//if character matches, it is not marked as a mistake
-        itemsArr.push(<span key={i}>{substring1[i]}</span>)
+        itemsArr.push(<span key={i} className={words[i] === ' ' ? 'space' : null}>{substring1[i]}</span>)
       }
-      //console.log(itemsArr)
     }
     return(
       itemsArr
@@ -58,12 +62,15 @@ function App() {
   }
 
   const results = () => {
-    {/* Total Number of Words = Total Keys Pressed / 5
-      wpm = Total Number of Words / Time Elapsed  */}
-    setWpm((substring1.length/5)/3)
-    //console.log(wpm)
+    //Total Number of Words = Total Keys Pressed / 5
+    //wpm = Total Number of Words / Time Elapsed
+    //round to nearest whole number
+    setWpm(Math.round((substring1.length/5)/1))
+    //set accuracy by dividing substring length by 
+    //the difference between substring1 length and mistakeCount
+    //multiply by 100 and round to nearest whole number to get percentage
+    setAccuracy(Math.round(((substring1.length - mistakeCount)/substring1.length)*100))
   }
-
   useEffect(() => {
     let interval
     if(!paused){//if paused is false, update seconds
@@ -85,13 +92,16 @@ function App() {
   const reset = () =>{
     setPaused(true)
     setSeconds(0)
-    setMinutes(3)
+    setMinutes(1)
     setWords(null)
     setSubstring1('')
     setSubstring2('')
     setMistakeCount(0)
+    setWpm(0)
+    setAccuracy('')
   }
-  //console.log(substring1[substring1.length - 1].split(''))
+
+ // console.log('1: ', substring1)
 
   return (
     <div className="App">
@@ -102,10 +112,6 @@ function App() {
           </p>
         </div>
         
-        <div className='timer-buttons'>
-          <button onClick={() => reset()}>🔄</button>
-          <button onClick={() => setPaused(!paused)}>⏯</button>
-        </div>
       </div>
       <button onClick={handleClick}>Fetch</button>
       <div>
@@ -114,12 +120,19 @@ function App() {
             <span className={`substring1 ${substring1[substring1.length - 1] === ' ' ? 'space-r' : null}`}>{getLettersWithLoop()}</span>
             <span className={`substring2 ${substring2[0] === ' ' ? 'space-l' : null}`}>{substring1.length === 0 ? words : substring2}</span>
           </p>
-          <input className='typing-input' //readOnly={paused === true ? true : false}
+          <input className='typing-input' readOnly={minutes+seconds === 0 ? true : false}
             onChange={handleChange}></input>
         </div>
-        <p>Mistakes: {mistakeCount}</p>
-        <button onClick={() => results()}>Results</button>
-        {minutes+seconds === 0 ? wpm : null}
+        {paused === true && minutes === 3 ? <p>Start typing to begin</p> : null}
+        {minutes+seconds === 0 ? 
+          <div>
+            <p>Results</p>
+            <p>Words Per Minute: {minutes+seconds === 0 ? wpm : null}</p>
+            <p>Accuracy: {accuracy}%</p>
+            <p>Mistakes: {mistakeCount}</p>          
+            <button onClick={() => reset()}>Try Again</button>
+          </div>
+          : null}           
       </div>
     </div>
   );
