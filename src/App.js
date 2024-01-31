@@ -1,16 +1,11 @@
 import './App.css';
 import React, {useEffect, useState} from 'react';
 
-{/*
-https://uselessfacts.jsph.pl/
-*/}
-
 function App() {
   const [paused, setPaused] = useState(true);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(1);
   const [words, setWords] = useState(null);
-  //const [typeInput, setTypeInput] = useState('');
   const [text, setText] = useState('');
   const [substring1, setSubstring1] = useState('');
   const [substring2, setSubstring2] = useState('');
@@ -25,10 +20,6 @@ function App() {
       .then(result => {
         setWords(result.split('\n').sort(() => Math.random() - 0.5).join(' '))      
       })
-  } 
-
-  const handleClick = () => {
-    fetchRandomWords()
   }
 
   const handleChange = (event) =>{
@@ -83,6 +74,9 @@ function App() {
       setPaused(true)
       results()
     }
+    if(words === null){
+      fetchRandomWords()
+    }
     return function clear(){//clears interval if paused is true
       clearInterval(interval)
     }
@@ -101,8 +95,6 @@ function App() {
     setAccuracy('')
   }
 
- // console.log('1: ', substring1)
-
   return (
     <div className="App">
       <div className='timer-container'>
@@ -110,10 +102,8 @@ function App() {
           <p>
             {minutes}:{seconds < 10 ? 0 : null}{seconds}{/*if seconds is less than 10, add a 0*/}
           </p>
-        </div>
-        
+        </div>        
       </div>
-      <button onClick={handleClick}>Fetch</button>
       <div>
         <div className='text-body'>
           <p>
@@ -123,7 +113,7 @@ function App() {
           <input className='typing-input' readOnly={minutes+seconds === 0 ? true : false}
             onChange={handleChange}></input>
         </div>
-        {paused === true && minutes === 3 ? <p>Start typing to begin</p> : null}
+        {paused === true && minutes === 1 ? <p>Start typing to begin</p> : null}
         {minutes+seconds === 0 ? 
           <div>
             <p>Results</p>
