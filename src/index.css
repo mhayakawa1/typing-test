@@ -1,9 +1,38 @@
-.timer-container{
-  width: 5rem;
+/*https://www.schemecolor.com/blue-green-gradient-color-scheme.php
+https://colorhunt.co/palette/f6ef9823eae61b7fbd112f91
+https://mycolor.space/gradient3?ori=to+right+top&hex=%23F6EF98&hex2=%2323EAE6&hex3=%23112F91&submit=submit
+*/
+body{
+  /*background-color: gray;*/
+  background-image: linear-gradient(to right bottom, #08B3E5, #0FBED8, #2AF598);
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: "Poppins", sans-serif;
+  color: white;
+}
+
+.App{
+  height: auto;
+  width: 100%;
+}
+
+h1{
+  font-weight: normal;
+}
+
+.controls-container{
+  width: auto;
+  margin: 0 auto 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 .timer{
-  border: 1px solid black;
   height: 2rem;
   width: 5rem;
   display: flex;
@@ -11,46 +40,38 @@
   align-items: center;
 }
 
-.fact{
-  width: 80%;
-  margin: auto;
-}
-
-.text-body{
-  width: 80%;
-  margin: auto;
-}
-
 .text-body{
   width: 50rem;
   height: auto;
   overflow: clip;
   display: flex;
+  background-color: white;
+  margin: 2rem auto 2rem auto;
+  border-radius: 10px;
 }
 
 .text-body p{
-  height: 4rem;
-  font-size: 3rem;
+  height: 3rem;
+  font-size: 2rem;
   padding: 0;
   margin: 0;
   width: 100%;
   display: flex;
-  border: 1px solid black;
 }
 
 .typing-input{
   position: absolute;
   z-index: 2;
   width: 25rem;
-  height: 4rem;
-  font-size: 3rem;
+  height: 3rem;
+  font-size: 2rem;
+  font-family: "Poppins", sans-serif;
   text-align: right;
-  font-family: 'Times New Roman', Times, serif;
   background-color: rgb(0,0,0,0);
   color: black;
   -webkit-text-fill-color: transparent;
   border: none;
-  padding: 0 0 .7% 0;
+  padding: 0 0 0 .5rem;
 }
 
 .typing-input:focus{
@@ -82,6 +103,7 @@
   width: 50%;
   text-align: left;
   box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .space-l{
@@ -90,4 +112,30 @@
 
 .space-r{
   padding: 0 .25em 0 0;
+}
+
+.results{
+  display: flex;
+  justify-content: center;
+}
+
+.result-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 10rem;
+}
+
+.stat{
+  background-color: white;
+  border-radius: 10px;
+  height: 4rem;
+  width: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat p{
+  color: black;
 }
