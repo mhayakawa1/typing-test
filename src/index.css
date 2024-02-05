@@ -30,18 +30,48 @@ h1{
   margin: 0 auto 0 auto;
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: auto;
+}
+
+.try-again{
+  background-color: rgb(0,0,0,0);
+  border: 2px solid white;
+  border-radius: 5px;
+  color: white;
+  width: 6rem;
+  height: 2.5rem;
+  font-family: 'Poppins', sans-serif;
+  opacity: 75%;
+}
+
+.clickable{
+  opacity: 100%;
+}
+
+.clickable:hover{
+  background-color: rgb(255,255,255,.75);
+  border: none;
+  color: #0FBED8;
+}
+
+.clickable:active{
+  background-color: white;
 }
 
 .timer{
-  height: 2rem;
+  height: 100%;
   width: 5rem;
+  font-size: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
 }
 
 .text-body{
-  width: 50rem;
+  width: 45rem;
   height: auto;
   overflow: clip;
   display: flex;
@@ -56,7 +86,10 @@ h1{
   padding: 0;
   margin: 0;
   width: 100%;
-  display: flex;
+  background: linear-gradient(to right, rgb(0,0,0,0), black, black, black, rgb(0,0,0,0));
+  background-clip: calc();
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .typing-input{
