@@ -4,22 +4,22 @@ import React, {useEffect, useState} from 'react';
 function App() {
   const [paused, setPaused] = useState(true);
   const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(1);
+  const [minutes, setMinutes] = useState(0);
   const [words, setWords] = useState(null);
   const [text, setText] = useState('');
   const [substring1, setSubstring1] = useState('');
   const [substring2, setSubstring2] = useState('');
   const [mistakeCount, setMistakeCount] = useState(0);
   const [wpm, setWpm] = useState(0);
-  const [accuracy, setAccuracy] = useState('');
+  const [accuracy, setAccuracy] = useState(0);
 
   const fetchRandomWords = () =>{
     //get words from API
-    fetch('https://gist.githubusercontent.com/deekayen/4148741/raw/98d35708fa344717d8eee15d11987de6c8e26d7d/1-1000.txt')    
+    {/*fetch('https://gist.githubusercontent.com/deekayen/4148741/raw/98d35708fa344717d8eee15d11987de6c8e26d7d/1-1000.txt')    
       .then(res => res.text())
       .then(result => {
         setWords(result.split('\n').sort(() => Math.random() - 0.5).join(' '))      
-      })
+      })*/}
   }
 
   const handleChange = (event) =>{
@@ -92,37 +92,46 @@ function App() {
     setSubstring2('')
     setMistakeCount(0)
     setWpm(0)
-    setAccuracy('')
+    setAccuracy(0)
   }
 
   return (
     <div className="App">
-      <div className='timer-container'>
-        <div className='timer'>
-          <p>
-            {minutes}:{seconds < 10 ? 0 : null}{seconds}{/*if seconds is less than 10, add a 0*/}
-          </p>
-        </div>        
+      <h1>Test your typing speed</h1>
+      <div className='controls-container'>
+        <button className={`try-again ${minutes+seconds === 0 ? 'clickable' : null}`} onClick={() => reset()}>Try Again</button>
+        <p className='timer'>
+          {minutes}:{seconds < 10 ? 0 : null}{seconds}{/*if seconds is less than 10, add a 0*/}
+        </p>
       </div>
-      <div>
-        <div className='text-body'>
-          <p>
-            <span className={`substring1 ${substring1[substring1.length - 1] === ' ' ? 'space-r' : null}`}>{getLettersWithLoop()}</span>
-            <span className={`substring2 ${substring2[0] === ' ' ? 'space-l' : null}`}>{substring1.length === 0 ? words : substring2}</span>
-          </p>
-          <input className='typing-input' readOnly={minutes+seconds === 0 ? true : false}
-            onChange={handleChange}></input>
-        </div>
-        {paused === true && minutes === 1 ? <p>Start typing to begin</p> : null}
-        {minutes+seconds === 0 ? 
-          <div>
-            <p>Results</p>
-            <p>Words Per Minute: {minutes+seconds === 0 ? wpm : null}</p>
-            <p>Accuracy: {accuracy}%</p>
-            <p>Mistakes: {mistakeCount}</p>          
-            <button onClick={() => reset()}>Try Again</button>
+      <div className='text-body'>
+        <p>
+          <span className={`substring1 ${substring1[substring1.length - 1] === ' ' ? 'space-r' : null}`}>{getLettersWithLoop()}</span>
+          <span className={`substring2 ${substring2[0] === ' ' ? 'space-l' : null}`}>{substring1.length === 0 ? words : substring2}</span>
+        </p>
+        <input className='typing-input' readOnly={minutes+seconds === 0 ? true : false}
+          onChange={handleChange}></input>
+      </div>
+      {paused === true && minutes === 1 ? <p>Start typing to begin</p> : null}
+      <div className='results'>
+        <div className='result-item'>
+          <div className='stat'>
+            <p>{minutes+seconds === 0 ? wpm : '--'}</p>
           </div>
-          : null}           
+          <p className='stat-type'>Words Per Minute</p>
+        </div>
+        <div className='result-item'>
+          <div className='stat'>
+            <p>{minutes+seconds === 0 ? `${accuracy}%` : '--'}</p>
+          </div>
+          <p className='stat-type'>Accuracy</p>
+        </div>
+        <div className='result-item'>
+          <div className='stat'>
+            <p>{minutes === 1 && seconds === 0 ? '--' : mistakeCount}</p>
+          </div>
+          <p className='stat-type'>Mistakes</p>
+        </div>
       </div>
     </div>
   );
