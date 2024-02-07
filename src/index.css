@@ -51,13 +51,13 @@ h1{
 }
 
 .clickable:hover{
-  background-color: rgb(255,255,255,.75);
+  background-color: white;
   border: none;
   color: #0FBED8;
 }
 
 .clickable:active{
-  background-color: white;
+  background-color: rgb(255,255,255,.75);
 }
 
 .timer{
@@ -71,7 +71,7 @@ h1{
 }
 
 .text-body{
-  width: 45rem;
+  width: 44rem;
   height: auto;
   overflow: clip;
   display: flex;
@@ -86,16 +86,17 @@ h1{
   padding: 0;
   margin: 0;
   width: 100%;
-  background: linear-gradient(to right, rgb(0,0,0,0), black, black, black, rgb(0,0,0,0));
+  display: flex;
+  /*background: linear-gradient(to right, rgb(0,0,0,0), gray, gray, rgb(0,0,0,0));
   background-clip: calc();
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;*/
 }
 
 .typing-input{
   position: absolute;
   z-index: 2;
-  width: 25rem;
+  width: 22rem;
   height: 3rem;
   font-size: 2rem;
   font-family: "Poppins", sans-serif;
@@ -112,18 +113,24 @@ h1{
 }
 
 .space{
-  min-width: .25em;
+  width: .25em;
+  border: 1px solid red;
+}
+
+.extra-space{
+  border: 1px solid red;
 }
 
 .substring1{
-  color: black;
   width: 50%;
+  color: black;
   text-align: right;
   padding: 0;
   box-sizing: border-box;
   direction: rtl;
   white-space: nowrap;
-  overflow: hidden
+  overflow: hidden;
+  border: 1px solid green;
 }
 
 .mistake{
