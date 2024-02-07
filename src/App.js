@@ -4,9 +4,8 @@ import React, {useEffect, useState} from 'react';
 function App() {
   const [paused, setPaused] = useState(true);
   const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
+  const [minutes, setMinutes] = useState(1);
   const [words, setWords] = useState(null);
-  const [text, setText] = useState('');
   const [substring1, setSubstring1] = useState('');
   const [substring2, setSubstring2] = useState('');
   const [mistakeCount, setMistakeCount] = useState(0);
@@ -15,11 +14,11 @@ function App() {
 
   const fetchRandomWords = () =>{
     //get words from API
-    {/*fetch('https://gist.githubusercontent.com/deekayen/4148741/raw/98d35708fa344717d8eee15d11987de6c8e26d7d/1-1000.txt')    
+    fetch('https://gist.githubusercontent.com/deekayen/4148741/raw/98d35708fa344717d8eee15d11987de6c8e26d7d/1-1000.txt')    
       .then(res => res.text())
       .then(result => {
         setWords(result.split('\n').sort(() => Math.random() - 0.5).join(' '))      
-      })*/}
+      })
   }
 
   const handleChange = (event) =>{
@@ -42,11 +41,18 @@ function App() {
     let itemsArr = [];
     for(let i = 0; i < substring1.length; i++){
       if(substring1[i] !== words[i]){//if character doesn't match, give it mistake className
-        itemsArr.push(<span key={i} className='mistake'>{substring1[i]}</span>)
+        {/*itemsArr.push(<span key={i} className={`mistake ${substring1[i] === ' ' ? 'space' : null}`}>{substring1[i]}</span>
+        )*/}
+        if(substring1[i] === ' '){
+          itemsArr.push(<span key={i} className='mistake extra-space'></span>)
+        }else{
+          itemsArr.push(<span key={i} className='mistake'>{substring1[i]}</span>)
+        }
       }else{//if character matches, it is not marked as a mistake
         itemsArr.push(<span key={i} className={words[i] === ' ' ? 'space' : null}>{substring1[i]}</span>)
       }
     }
+    
     return(
       itemsArr
     )
