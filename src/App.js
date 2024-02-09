@@ -39,20 +39,21 @@ function App() {
 
   const getLettersWithLoop = () => {
     let itemsArr = [];
-    for(let i = 0; i < substring1.length; i++){
-      if(substring1[i] !== words[i]){//if character doesn't match, give it mistake className
-        {/*itemsArr.push(<span key={i} className={`mistake ${substring1[i] === ' ' ? 'space' : null}`}>{substring1[i]}</span>
-        )*/}
-        if(substring1[i] === ' '){
-          itemsArr.push(<span key={i} className='mistake extra-space'></span>)
-        }else{
-          itemsArr.push(<span key={i} className='mistake'>{substring1[i]}</span>)
-        }
-      }else{//if character matches, it is not marked as a mistake
-        itemsArr.push(<span key={i} className={words[i] === ' ' ? 'space' : null}>{substring1[i]}</span>)
+    let extraSpaces = 0
+    if(substring1[substring1.length-1] === ' '){
+      for(let i = substring1.length; i >= 0; i--){
+        
       }
     }
-    
+    for(let i = 0; i < substring1.length; i++){
+      if(substring1[i] !== words[i]){//if character doesn't match, give it mistake className
+          itemsArr.push(<span key={i} className={`mistake ${substring1[i] === ' ' ? 'extra-space' : null}`}>{substring1[i]}</span>)
+       // }
+      }else{//if character matches, it is not marked as a mistake
+        itemsArr.push(<span key={i} className={substring1[i] === ' ' ? 'space' : null}>{substring1[i]}</span>)
+      }
+    }
+    //console.log(itemsArr)
     return(
       itemsArr
     )
@@ -63,9 +64,6 @@ function App() {
     //wpm = Total Number of Words / Time Elapsed
     //round to nearest whole number
     setWpm(Math.round((substring1.length/5)/1))
-    //set accuracy by dividing substring length by 
-    //the difference between substring1 length and mistakeCount
-    //multiply by 100 and round to nearest whole number to get percentage
     setAccuracy(Math.round(((substring1.length - mistakeCount)/substring1.length)*100))
   }
   useEffect(() => {
@@ -107,13 +105,13 @@ function App() {
       <div className='controls-container'>
         <button className={`try-again ${minutes+seconds === 0 ? 'clickable' : null}`} onClick={() => reset()}>Try Again</button>
         <p className='timer'>
-          {minutes}:{seconds < 10 ? 0 : null}{seconds}{/*if seconds is less than 10, add a 0*/}
+          {minutes}:{seconds < 10 ? 0 : null}{seconds}
         </p>
       </div>
       <div className='text-body'>
         <p>
-          <span className={`substring1 ${substring1[substring1.length - 1] === ' ' ? 'space-r' : null}`}>{getLettersWithLoop()}</span>
-          <span className={`substring2 ${substring2[0] === ' ' ? 'space-l' : null}`}>{substring1.length === 0 ? words : substring2}</span>
+          <span className={`substring1 ${substring1[substring1.length - 1] === ' ' ? 'space-right' : null}`}>{getLettersWithLoop()}</span>
+          <span className={`substring2 ${substring2[0] === ' ' ? 'space-left' : null}`}>{substring1.length === 0 ? words : substring2}</span>
         </p>
         <input className='typing-input' readOnly={minutes+seconds === 0 ? true : false}
           onChange={handleChange}></input>
