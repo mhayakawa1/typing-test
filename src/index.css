@@ -72,26 +72,24 @@ h1{
 
 .text-body{
   width: 44rem;
-  height: auto;
+  height: 3rem;
   overflow: clip;
   display: flex;
   background-color: white;
-  margin: 2rem auto 2rem auto;
+  padding: 0;
   border-radius: 10px;
+  font-size: 2rem;
+  display: flex;
+  margin: 1rem;
 }
 
-.text-body p{
-  height: 3rem;
+ /*.text-body{
   font-size: 2rem;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  display: flex;
-  /*background: linear-gradient(to right, rgb(0,0,0,0), gray, gray, rgb(0,0,0,0));
+ background: linear-gradient(to right, rgb(0,0,0,0), gray, gray, rgb(0,0,0,0));
   background-clip: calc();
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;*/
-}
+  -webkit-text-fill-color: transparent;
+}*/
 
 .typing-input{
   position: absolute;
@@ -113,19 +111,25 @@ h1{
 }
 
 .space{
-  width: .25em;
+  width: 1px;
   /*border: 1px solid red;*/
 }
 
-.substring1{
-  width: 50%;
+.test{
   color: black;
+  padding: 0;
+}
+
+.substring1{
+  border: 1px solid blue;
+  width: 50%;
   text-align: right;
   padding: 0;
   box-sizing: border-box;
   direction: rtl;
   white-space: nowrap;
   overflow: hidden;
+  margin: 0;
 }
 
 .mistake{
@@ -135,14 +139,19 @@ h1{
 
 .extra-space{
   display: inline-block;
-  width: .25em;
+  width: 5px;
+  height: 15px;
   /*height: 2.5px;
   background-color: red;
   margin: 0 0 -4.5px 0;*/
+  margin: 1px;
   border: 1px solid blue;
+
 }
 
 .substring2{
+  border: 1px solid blue;
+  margin: 0;
   color: gray;
   width: 50%;
   text-align: left;
