@@ -39,24 +39,40 @@ function App() {
 
   const getLettersWithLoop = () => {
     let itemsArr = [];
-    let extraSpaces = 0
+    /*let extraSpaces = 0
+    let addSpaces = true
+
     if(substring1[substring1.length-1] === ' '){
+      extraSpaces = -1
       for(let i = substring1.length; i >= 0; i--){
-        
+        if(substring1[i] !== ' '){
+          addSpaces = false
+        }else{
+          extraSpaces += 1
+        }
       }
+    }else{
+      itemsArr = [];
+      extraSpaces = 0
+      addSpaces = true
     }
+    
+    if(extraSpaces > 0){
+      for(let i = 0; i < extraSpaces; i++){
+        itemsArr.push(<span key={'x'+i} className='mistake extra-space'>l</span>)
+      }
+    }*/
     for(let i = 0; i < substring1.length; i++){
       if(substring1[i] !== words[i]){//if character doesn't match, give it mistake className
-          itemsArr.push(<span key={i} className={`mistake ${substring1[i] === ' ' ? 'extra-space' : null}`}>{substring1[i]}</span>)
-       // }
+          itemsArr.push(<span key={i} className={`mistake ${substring1[i] === ' ' ? 'extra-space' : null}`}>{substring1[i] === ' ' ? '!' : substring1[i]}</span>)
       }else{//if character matches, it is not marked as a mistake
         itemsArr.push(<span key={i} className={substring1[i] === ' ' ? 'space' : null}>{substring1[i]}</span>)
       }
     }
-    //console.log(itemsArr)
+    /*
     return(
       itemsArr
-    )
+    )*/
   }
 
   const results = () => {
@@ -98,8 +114,8 @@ function App() {
     setWpm(0)
     setAccuracy(0)
   }
-
   return (
+    //substring1.map(i => <span></span>)
     <div className="App">
       <h1>Test your typing speed</h1>
       <div className='controls-container'>
@@ -109,10 +125,19 @@ function App() {
         </p>
       </div>
       <div className='text-body'>
-        <p>
-          <span className={`substring1 ${substring1[substring1.length - 1] === ' ' ? 'space-right' : null}`}>{getLettersWithLoop()}</span>
-          <span className={`substring2 ${substring2[0] === ' ' ? 'space-left' : null}`}>{substring1.length === 0 ? words : substring2}</span>
-        </p>
+        <p className='substring1'>
+          {substring1 === '' ? null : 
+            substring1.split().map((element, i) => (
+            element === words[i] ? 
+            <span key={i} className='test'>{element}</span>
+            :
+            element !== words[i] && element === ' ' ?
+            <span key={i} className='mistake extra-space'></span>
+            :
+            <span key={i} className='mistake'>{element}</span>
+          ))}
+        </p>          
+        <p className={`substring2 ${substring2[0] === ' ' ? 'space-left' : null}`}>{substring1.length === 0 ? words : substring2}</p>
         <input className='typing-input' readOnly={minutes+seconds === 0 ? true : false}
           onChange={handleChange}></input>
       </div>
