@@ -114,8 +114,8 @@ function App() {
     setWpm(0)
     setAccuracy(0)
   }
+  
   return (
-    //substring1.map(i => <span></span>)
     <div className="App">
       <h1>Test your typing speed</h1>
       <div className='controls-container'>
@@ -125,23 +125,20 @@ function App() {
         </p>
       </div>
       <div className='text-body'>
-        <p className='substring1'>
+        <div className='substring1'>
           {substring1 === '' ? null : 
-            substring1.split().map((element, i) => (
+            substring1.split('').map((element, i) => (
             element === words[i] ? 
-            <span key={i} className='test'>{element}</span>
-            :
-            element !== words[i] && element === ' ' ?
-            <span key={i} className='mistake extra-space'></span>
+            <pre key={i} className='test'>{element}</pre>
             :
             <span key={i} className='mistake'>{element}</span>
           ))}
-        </p>          
-        <p className={`substring2 ${substring2[0] === ' ' ? 'space-left' : null}`}>{substring1.length === 0 ? words : substring2}</p>
+        </div>          
+        <pre className={`substring2 ${substring2[0] === ' ' ? 'space-left' : null}`}>{substring1.length === 0 ? words : substring2}</pre>
         <input className='typing-input' readOnly={minutes+seconds === 0 ? true : false}
           onChange={handleChange}></input>
       </div>
-      {paused === true && minutes === 1 ? <p>Start typing to begin</p> : null}
+      <p>{paused === true && minutes === 1 ? 'Start typing to begin' : null}</p>
       <div className='results'>
         <div className='result-item'>
           <div className='stat'>
