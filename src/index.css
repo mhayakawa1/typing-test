@@ -1,11 +1,6 @@
-/*https://www.schemecolor.com/blue-green-gradient-color-scheme.php
-https://colorhunt.co/palette/f6ef9823eae61b7fbd112f91
-https://mycolor.space/gradient3?ori=to+right+top&hex=%23F6EF98&hex2=%2323EAE6&hex3=%23112F91&submit=submit
-*/
 body{
-  background-color: gray;/*
   background-image: linear-gradient(to right bottom, #08B3E5, #0FBED8, #2AF598);
-  */padding: 0;
+  padding: 0;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -80,16 +75,8 @@ h1{
   border-radius: 10px;
   font-size: 2rem;
   display: flex;
-  margin: 1rem;
+  margin: 1rem auto 1rem auto;
 }
-
- /*.text-body{
-  font-size: 2rem;
- background: linear-gradient(to right, rgb(0,0,0,0), gray, gray, rgb(0,0,0,0));
-  background-clip: calc();
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}*/
 
 .typing-input{
   position: absolute;
@@ -118,18 +105,25 @@ h1{
 .test{
   color: black;
   padding: 0;
+  margin: 0;
+  max-width: 2rem;
+  font-family: "Poppins", sans-serif;
+  
 }
 
 .substring1{
-  border: 1px solid blue;
   width: 50%;
-  text-align: right;
   padding: 0;
+  text-align: right;
   box-sizing: border-box;
   direction: rtl;
   white-space: nowrap;
   overflow: hidden;
   margin: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  white-space: pre;
 }
 
 .mistake{
@@ -141,30 +135,21 @@ h1{
   display: inline-block;
   width: 5px;
   height: 15px;
-  /*height: 2.5px;
-  background-color: red;
-  margin: 0 0 -4.5px 0;*/
   margin: 1px;
-  border: 1px solid blue;
-
-}
-
-.substring2{
-  border: 1px solid blue;
-  margin: 0;
-  color: gray;
-  width: 50%;
-  text-align: left;
-  box-sizing: border-box;
-  white-space: nowrap;
 }
 
 .space-left{
   padding: 0 0 0 .25em;
 }
 
-.space-right{
-  padding: 0 .25em 0 0;
+.substring2{
+  margin: 0;
+  color: gray;
+  width: 50%;
+  text-align: left;
+  box-sizing: border-box;
+  white-space: nowrap;
+  font-family: "Poppins", sans-serif;
 }
 
 .results{
