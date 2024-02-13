@@ -99,7 +99,6 @@ h1{
 
 .space{
   width: 1px;
-  /*border: 1px solid red;*/
 }
 
 .test{
@@ -152,9 +151,14 @@ h1{
   font-family: "Poppins", sans-serif;
 }
 
+.start-typing{
+  height: 1rem;
+}
+
 .results{
   display: flex;
   justify-content: center;
+  padding: 1rem 0 0 0;
 }
 
 .result-item{
