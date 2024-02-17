@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 function App() {
   const [paused, setPaused] = useState(true);
   const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(1);
+  const [minutes, setMinutes] = useState(3);
   const [words, setWords] = useState(null);
   const [substring1, setSubstring1] = useState('');
   const [substring2, setSubstring2] = useState('');
@@ -37,49 +37,11 @@ function App() {
     }
   }
 
-  const getLettersWithLoop = () => {
-    let itemsArr = [];
-    /*let extraSpaces = 0
-    let addSpaces = true
-
-    if(substring1[substring1.length-1] === ' '){
-      extraSpaces = -1
-      for(let i = substring1.length; i >= 0; i--){
-        if(substring1[i] !== ' '){
-          addSpaces = false
-        }else{
-          extraSpaces += 1
-        }
-      }
-    }else{
-      itemsArr = [];
-      extraSpaces = 0
-      addSpaces = true
-    }
-    
-    if(extraSpaces > 0){
-      for(let i = 0; i < extraSpaces; i++){
-        itemsArr.push(<span key={'x'+i} className='mistake extra-space'>l</span>)
-      }
-    }*/
-    for(let i = 0; i < substring1.length; i++){
-      if(substring1[i] !== words[i]){//if character doesn't match, give it mistake className
-          itemsArr.push(<span key={i} className={`mistake ${substring1[i] === ' ' ? 'extra-space' : null}`}>{substring1[i] === ' ' ? '!' : substring1[i]}</span>)
-      }else{//if character matches, it is not marked as a mistake
-        itemsArr.push(<span key={i} className={substring1[i] === ' ' ? 'space' : null}>{substring1[i]}</span>)
-      }
-    }
-    /*
-    return(
-      itemsArr
-    )*/
-  }
-
   const results = () => {
     //Total Number of Words = Total Keys Pressed / 5
     //wpm = Total Number of Words / Time Elapsed
     //round to nearest whole number
-    setWpm(Math.round((substring1.length/5)/1))
+    setWpm(Math.round((substring1.length/5)/3))
     setAccuracy(Math.round(((substring1.length - mistakeCount)/substring1.length)*100))
   }
   useEffect(() => {
@@ -106,7 +68,7 @@ function App() {
   const reset = () =>{
     setPaused(true)
     setSeconds(0)
-    setMinutes(1)
+    setMinutes(3)
     setWords(null)
     setSubstring1('')
     setSubstring2('')
@@ -154,7 +116,7 @@ function App() {
         </div>
         <div className='result-item'>
           <div className='stat'>
-            <p>{minutes === 1 && seconds === 0 ? '--' : mistakeCount}</p>
+            <p>{minutes === 3 && seconds === 0 ? '--' : mistakeCount}</p>
           </div>
           <p className='stat-type'>Mistakes</p>
         </div>
