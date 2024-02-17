@@ -100,7 +100,7 @@ function App() {
         <input className='typing-input' readOnly={minutes+seconds === 0 ? true : false}
           onChange={handleChange}></input>
       </div>
-      <p className='start-typing'>{paused === true && minutes === 1 ? 'Start typing to begin' : null}</p>
+      <p className='start-typing'>{paused === true && minutes === 3 ? 'Start typing to begin' : null}</p>
       <div className='results'>
         <div className='result-item'>
           <div className='stat'>
