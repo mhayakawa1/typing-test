@@ -69,7 +69,7 @@ function App() {
     setPaused(true)
     setSeconds(0)
     setMinutes(3)
-    setWords(null)
+    fetchRandomWords()
     setSubstring1('')
     setSubstring2('')
     setMistakeCount(0)
