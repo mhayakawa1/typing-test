@@ -13,7 +13,6 @@ function App() {
   const [accuracy, setAccuracy] = useState(0);
 
   const fetchRandomWords = () =>{
-    //get words from API
     fetch('https://gist.githubusercontent.com/deekayen/4148741/raw/98d35708fa344717d8eee15d11987de6c8e26d7d/1-1000.txt')    
       .then(res => res.text())
       .then(result => {
@@ -46,7 +45,7 @@ function App() {
   }
   useEffect(() => {
     let interval
-    if(!paused){//if paused is false, update seconds
+    if(!paused){
       interval = setInterval(() =>{
         setMinutes((minutes) => seconds === 0 && minutes > 0 ? minutes - 1 : minutes)
         setSeconds((seconds) => seconds > 0 ? seconds - 1 : 59)
