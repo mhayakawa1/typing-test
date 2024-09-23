@@ -38,7 +38,7 @@ function App() {
     }
   }
 
-  const results = () => {
+  const getResults = () => {
     //Total Number of Words = Total Keys Pressed / 5
     //wpm = Total Number of Words / Time Elapsed
     //round to nearest whole number
@@ -46,6 +46,7 @@ function App() {
     setWpm(Math.round((length/5)/3));
     setAccuracy(Math.round(((length - mistakeCount)/length)*100));
   }
+
   useEffect(() => {
     let interval
     if(!paused){
@@ -56,7 +57,7 @@ function App() {
     }
     if(minutes+seconds === 0){
       setPaused(true);
-      results();
+      getResults();
     }
     if(words === null){
       fetchRandomWords();
@@ -79,7 +80,7 @@ function App() {
     setAccuracy(0);
   }
 
-  const getResultItems = () => {
+  const createResultItems = () => {
     const resultItemInfo = [
       {
         statType: 'Words Per Minute',
@@ -143,7 +144,7 @@ function App() {
       </div>
       <p className='start-typing'>{paused === true && minutes === 3 ? 'Start typing to begin' : null}</p>
       <div className='results'>
-        {getResultItems()}
+        {createResultItems()}
       </div>
     </div>
   );
