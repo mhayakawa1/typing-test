@@ -125,7 +125,7 @@ function App() {
         <button className='control-button clickable' onClick={() => reset()}>Reset</button>
         <button className={`control-button ${minutes+seconds === 0 ? 'clickable' : null}`} onClick={() => reset()}>Try Again</button>
         <p className='timer'>
-          {minutes}:{seconds < 10 ? 0 : null}{seconds}
+          {minutes}:{seconds < 10 && 0}{seconds}
         </p>
       </div>
       <div className='text-body'>
@@ -138,11 +138,11 @@ function App() {
             <span key={i} className='mistake'>{element}</span>
           ))}
         </div>          
-        <pre className={`substring2 ${substring2[0] === ' ' ? 'space-left' : null}`}>{substring1.length === 0 ? words : substring2}</pre>
+        <pre className={`substring2 ${substring2[0] === ' ' && 'space-left'}`}>{substring1.length === 0 ? words : substring2}</pre>
         <input className='typing-input' readOnly={minutes+seconds === 0 ? true : false} value={substring1}
           onChange={handleChange}></input>
       </div>
-      <p className='start-typing'>{paused === true && minutes === 3 ? 'Start typing to begin' : null}</p>
+      <p className='start-typing'>{paused === true && minutes === 3 && 'Start typing to begin'}</p>
       <div className='results'>
         {createResultItems()}
       </div>
