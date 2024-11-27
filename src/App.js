@@ -1,6 +1,12 @@
 import './App.css';
 import React, {useEffect, useState} from 'react';
 
+const ControlButton = ({isClickable, reset, text}) => {
+  return(
+    <button className={`control-button ${isClickable && 'clickable'}`} onClick={reset}>{text}</button>
+  )
+}
+
 function App() {
   const [paused, setPaused] = useState(true);
   const [seconds, setSeconds] = useState(0);
@@ -108,7 +114,7 @@ function App() {
           <div className='stat'>
             <p>{statString}</p>
           </div>
-          <p className='stat-type'>{resultItemInfo[i].number}</p>
+          <p className='stat-type'>{resultItemInfo[i].statType}</p>
         </div>
       )      
     }
@@ -122,8 +128,8 @@ function App() {
     <div className='App'>
       <h1>Test your typing speed</h1>
       <div className='controls-container'>
-        <button className='control-button clickable' onClick={() => reset()}>Reset</button>
-        <button className={`control-button ${minutes+seconds === 0 ? 'clickable' : null}`} onClick={() => reset()}>Try Again</button>
+        <ControlButton isClickable={true} reset={reset} text='Reset'/>
+        <ControlButton isClickable={minutes+seconds === 0} reset={reset} text='Try Again' />
         <p className='timer'>
           {minutes}:{seconds < 10 && 0}{seconds}
         </p>
